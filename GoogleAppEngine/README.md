@@ -71,3 +71,21 @@ It may take a few minutes for the deployment to finish. Once it's done, you will
 Visit the URL provided in the deployment message to access your deployed app.
 You should see a "Hello, World!" message displayed in your browser.
 Congratulations! You have successfully created a simple Node.js application and deployed it to Google App Engine.
+
+
+
+# Deploying your Python app
+
+    1. Clone the Sample Repository
+
+```git clone https://github.com/GoogleCloudPlatform/python-docs-samples```
+
+    2. Change the directory to the simple 
+  
+```cd python-docs-samples/appengine/standard/hello_world```
+
+
+    3. Continue from Step 5 with 
+    
+``` gcloud init ```
+        

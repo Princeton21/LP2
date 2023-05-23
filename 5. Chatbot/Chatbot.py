@@ -1,5 +1,5 @@
 import nltk
-from nltk.chat.util import Chat, reflections
+from nltk.chat.util import Chat
 
 pairs=[
     #
@@ -88,10 +88,6 @@ pairs=[
 
 ]
 
-def chat():
-    print("Hey there! I am Robot 2.0 at your service")
-    chat = Chat(pairs)
-    chat.converse()
-
-if __name__== "__main__":
-    chat()
+print("Hey there! I am Robot 2.0 at your service")
+chat = Chat(pairs)
+chat.converse()
