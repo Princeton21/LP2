@@ -18,64 +18,61 @@ struct Graph
     }
 };
 
-bool compareEdges(Edge a, Edge b)
+int findParent(int node, vector<int> &parent)
+{
+    if (parent[node] == -1)
+        return node;
+    return findParent(parent[node], parent);
+}
+
+bool comp(Edge a, Edge b)
 {
     return a.weight < b.weight;
 }
 
-int findParent(int v, vector<int> &parent)
-{
-    if (parent[v] == -1)
-        return v;
-    return findParent(parent[v], parent);
-}
-
-void unionSets(int x, int y, vector<int> &parent)
-{
-    parent[x] = y;
-}
-
-void kruskalMST(Graph graph)
+void kruskalsMST(Graph G)
 {
     vector<Edge> result;
-    vector<int> parent(graph.V, -1);
+    vector<int> parent(G.V, -1);
 
-    sort(graph.edges.begin(), graph.edges.end(), compareEdges);
+    sort(G.edges.begin(), G.edges.end(), comp);
 
-    int edge_count = 0, index = 0;
-    while (edge_count < graph.V - 1)
+    int edgeCount = 0;
+    int ind = 0;
+    while (edgeCount < G.V - 1)
     {
-        Edge next_edge = graph.edges[index++];
+        Edge nextEdge = G.edges[ind++];
 
-        int x = findParent(next_edge.src, parent);
-        int y = findParent(next_edge.dest, parent);
+        int x = findParent(nextEdge.src, parent);
+        int y = findParent(nextEdge.dest, parent);
 
         if (x != y)
         {
-            result.push_back(next_edge);
-            unionSets(x, y, parent);
-            edge_count++;
+            result.push_back(nextEdge);
+            parent[x] = y;
+            edgeCount++;
         }
     }
 
-    int min_cost = 0;
+    int minCost = 0;
     for (const Edge &edge : result)
     {
-        printf("Edge %d:(%d, %d) cost: %d\n",
-               edge_count++, edge.src, edge.dest, edge.weight);
-        min_cost += edge.weight;
+        cout << edge.src << " " << edge.dest << " -> " << edge.weight << endl;
+        minCost += edge.weight;
     }
 
-    printf("\nMinimum cost = %d\n", min_cost);
+    cout << "minimum cost"
+         << " = " << minCost << endl;
 }
 
 int main()
 {
     int n, e;
     cin >> n >> e;
-    Graph graph(n, e);
 
-    for (int i = 0; i < e; i++)
+    Graph G(n, e);
+
+    for (int i = 0; i < e; ++i)
     {
         int u, v, w;
         cin >> u >> v >> w;
@@ -83,10 +80,9 @@ int main()
         edge.src = u;
         edge.dest = v;
         edge.weight = w;
-        graph.edges.push_back(edge);
+
+        G.edges.push_back(edge);
     }
 
-    kruskalMST(graph);
-
-    return 0;
+    kruskalsMST(G);
 }
